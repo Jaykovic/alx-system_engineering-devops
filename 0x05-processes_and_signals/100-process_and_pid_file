@@ -1,24 +1,11 @@
 #!/usr/bin/env bash
-# Does the following:
-#   Create a file /var/run/holbertonscript.pid containing the script PID.
-#   Displays "To infinity and beyond" indefinitely
-#   Displays "I hate the kill command" upon receiving a SIGTERM
-#   Displays "Y U no love me?!" upon receiving a SIGINT
-#   Deletes the file /var/run/holbertonscript.pid and terminates upon
-#+  receiving a SIGQUIT or SIGTERM.
-
-terminator() {
-  rm /var/run/holbertonscript.pid
-  exit
-}
-
-echo "$$" > /var/run/holbertonscript.pid
-
-while true
+# create pub file with its own pid and receive SIG
+sudo bash -c "echo $$ > /var/run/codingschoolscript.pid"
+trap "sudo rm -f /var/run/codingschoolscript.pid; exit" SIGQUIT
+trap "sudo rm -f /var/run/codingschoolscript.pid; echo I hate the kill command; exit" SIGTERM
+trap "echo Y U no love me?!" SIGINT
+while :
 do
-  echo "To infinity and beyond"
-  sleep 2
-  trap 'echo "Y U no love me?!"' SIGINT
-  trap 'echo "I hate the kill command" && terminator' SIGTERM
-  trap 'terminator' SIGQUIT
+    echo "To infinity and beyond"
+    sleep 2
 done
