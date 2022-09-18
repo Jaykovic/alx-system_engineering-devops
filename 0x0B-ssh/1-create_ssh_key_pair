@@ -4,4 +4,4 @@
 #+ Number of bits in the created key to be created 4096
 #+ The created key must be protected by a passphrase 'betty'
 
-ssh-keygen -f school -b 4096 -N betty
+ssh-keygen -b 4096 -f school -N betty
